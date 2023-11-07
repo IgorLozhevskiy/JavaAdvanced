@@ -5,7 +5,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public record Employee(long id, String name, int salary, String department, LocalDate birthDate)
-        implements Serializable {
+        implements Serializable, Comparable<Employee> {
+    @Override
+    public int compareTo(Employee obj) {
+        return Long.compare(id, obj.id);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
