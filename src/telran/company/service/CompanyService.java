@@ -1,5 +1,4 @@
 package telran.company.service;
-
 import telran.company.dto.DepartmentAverageSalary;
 import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;

@@ -5,7 +5,6 @@ import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;
 
 import java.util.List;
-
 public class CompanyServiceImpl implements CompanyService{
 
     @Override
