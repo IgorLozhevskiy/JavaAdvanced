@@ -4,16 +4,35 @@ import telran.company.dto.DepartmentAverageSalary;
 import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;
 
+import java.awt.*;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
-public class CompanyServiceImpl implements CompanyService{
+import java.util.*;
 
-    @Override
+public class CompanyServiceImpl implements CompanyService{
+    HashMap<Long, Employee> employeeMap = new HashMap<>();
+    HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+    /*
+    key - department, value - Set of employees working on the department
+    */
+    TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();
+    /*
+    key - salary, value - set of employees having the salary value
+    */
+    TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();
+    /*
+    key - date of birth, value - set of employees born at the date
+     */
+
+
     /*
     adds new Employee into a company
     In the case an employee with the given ID already exists,
     the exception IllegalStateException must be thrown
     returns reference to the being added Employee object
      */
+    @Override
     public Employee hireEmployee(Employee empl) {
         return null;
     }
