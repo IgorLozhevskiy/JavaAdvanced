@@ -54,6 +54,7 @@ public class CompanyServiceImpl implements CompanyService {
             set = new HashSet<>();
             employeesDepartment.put(department, set);
         }
+        set.add(empl);
     }
 
     private void addEmployeeAge(Employee empl) {
@@ -131,23 +132,41 @@ public class CompanyServiceImpl implements CompanyService {
     */
     @Override
     public List<Employee> getEmployeesByDepartment(String department) {
-        
-        return null;
+//        in the case no employees in the given department yhe empty collection should be returned
+        Set<Employee> setEmployeesDep = employeesDepartment.getOrDefault(department, new HashSet<>());
+        return new ArrayList<>(setEmployeesDep);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return null;
+        return new ArrayList<>(employeesMap.values());
     }
 
     @Override
     public List<Employee> getEmploeesBySalary(int salaryFrom, int salaryTo) {
-        return null;
+//      получаем коллекцию сетов:
+        Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for (Set<Employee> set : col){
+            res.addAll(set);
+        }
+        return res;
     }
 
     @Override
     public List<Employee> getEmploeeByAge(int ageFrom, int ageTo) {
-        return null;
+        LocalDate dateFrom = getBirthDate(ageTo);
+        LocalDate dateTo = getBirthDate(ageFrom);
+        Collection<Set<Employee>> col = employeesAge.subMap(dateFrom, dateTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for (Set<Employee> set : col){
+            res.addAll(set);
+        }
+        return res;
+    }
+
+    private LocalDate getBirthDate(int age) {
+        return  LocalDate.now().minusYears(age);
     }
 
     @Override
@@ -162,12 +181,16 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Employee updateDepartment(long id, String newDepartment) {
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee = new Employee(id, empl.name(), empl.salary(), newDepartment, empl.birthDate());
+        return hireEmployee(newEmployee);
     }
 
     @Override
     public Employee updateSalary(long id, int newSalary) {
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee = new Employee(id, empl.name(), newSalary, empl.department(), empl.birthDate());
+        return hireEmployee(newEmployee);
     }
 
     @Override
